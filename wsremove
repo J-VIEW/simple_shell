@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Prompt the user for the file name
+echo "Enter the name of the file:"
+
+# Read the file name from the user
+read user_input
+
+# Check if the file exists
+if [ -e "$user_input" ]; then
+    # Remove empty lines
+    sed -i '/^$/d' "$user_input"
+
+    # Remove leading, trailing, and extra spaces
+    sed -i 's/^[ \t]*//;s/[ \t]*$//;s/[ \t]\{1,\}/ /g' "$user_input"
+
+    # Check code against Betty style
+    betty "$user_input"
+    echo "Commands executed successfully on $user_input."
+else
+    echo "File '$user_input' does not exist."
+fi
+
